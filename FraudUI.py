@@ -4,8 +4,6 @@
 # In[1]:
 
 
-get_ipython().system('pip3 install streamlit')
-
 
 # In[2]:
 
