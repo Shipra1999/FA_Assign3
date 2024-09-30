@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Origin Classification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Text Origin Classification (MGT vs HGT)</h1>
+
+    <h2>Classify Text</h2>
+    <form id="text-form">
+        <textarea name="user_input" placeholder="Enter text to classify..." required></textarea>
+        <button type="submit">Classify Text</button>
+    </form>
+    <div id="text-result"></div>
+
+    <h2>Classify URL</h2>
+    <form id="url-form">
+        <input type="text" name="url_input" placeholder="Enter a URL to classify..." required>
+        <button type="submit">Classify URL</button>
+    </form>
+    <div id="url-result"></div>
+
+    <script>
+        document.getElementById('text-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/classify_text', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('text-result').innerText = `The text is: ${result.result}`;
+        });
+
+        document.getElementById('url-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/classify_url', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('url-result').innerText = `The content from the URL is: ${result.result}`;
+        });
+    </script>
+</body>
+</html>
